@@ -17,7 +17,7 @@ connectCloudinary()
 app.use(express.json())
 app.use(cors({
     origin: [
-        "https://full-e-commerce-forever-frontend.vercel.app"
+        "https://e-commerce-forever-frontend-sooty.vercel.app"
     ],
     credentials: true
 }))

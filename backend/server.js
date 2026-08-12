@@ -17,7 +17,7 @@ connectCloudinary()
 app.use(express.json())
 app.use(cors({
     origin: [
-        "https://e-commerce-forever-frontend-sooty.vercel.app"
+        "https://full-e-commerce-forever-frontend.vercel.app"
     ],
     credentials: true
 }))
@@ -25,7 +25,6 @@ app.use(cors({
 // api endpoints
 app.use('/api/user',userRouter)
 
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/product',productRouter)
 app.use('/api/cart',cartRouter)

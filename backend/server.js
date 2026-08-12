@@ -15,7 +15,13 @@ connectDB()
 connectCloudinary()
 //middlewares
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: [
+        'https://e-commerce-forever-nesi.vercel.app',
+        'https://forever-frontend-lddso7p29-neshiga-r.vercel.app'
+    ],
+    credentials: true
+}))
 
 // api endpoints
 app.use('/api/user',userRouter)

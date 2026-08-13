@@ -9,25 +9,29 @@ import cartRouter from './routes/cartRoute.js'
 import orderRouter from './routes/orderRoute.js'
 
 // App Config
-const app= express()
+const app = express()
 const port = process.env.PORT || 4000
-connectDB()
+
 connectCloudinary()
-//middlewares
+
+// Middlewares
 app.use(express.json())
+
 const allowedOrigins = [
-     'https://e-commerce-forever-frontend-new.vercel.app',
+    'https://e-commerce-forever-frontend-new.vercel.app',
     'https://backend-full-e-commerce-forever.vercel.app',
     'http://localhost:5173',
-    'http://localhost:3000'    // Local Backend
-];
+    'http://localhost:3000'
+]
+
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
+        if (!origin) return callback(null, true)
+
         if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
+            callback(null, true)
         } else {
-            callback(new Error('Not allowed by CORS'));
+            callback(new Error('Not allowed by CORS'))
         }
     },
     credentials: true,
@@ -38,22 +42,40 @@ app.use(cors({
         'X-Requested-With',
         'Accept',
         'Origin',
-        'token'  // ← இதை add பண்ணுங்கள்!
+        'token'
     ],
     exposedHeaders: ['Content-Length', 'X-Kuma-Revision'],
     maxAge: 86400
-}));
+}))
 
-// api endpoints
-app.use('/api/user',userRouter)
+// MongoDB connection
+app.use(async (req, res, next) => {
+    try {
+        await connectDB()
+        next()
+    } catch (error) {
+        console.error("❌ Database connection failed:", error.message)
 
-app.use(express.urlencoded({ extended: true }));
-app.use('/api/product',productRouter)
-app.use('/api/cart',cartRouter)
-app.use('/api/order',orderRouter)
+        res.status(500).json({
+            success: false,
+            message: "Database connection failed"
+        })
+    }
+})
 
-app.get('/',(req,res)=>{
+app.use(express.urlencoded({ extended: true }))
+
+// API endpoints
+app.use('/api/user', userRouter)
+app.use('/api/product', productRouter)
+app.use('/api/cart', cartRouter)
+app.use('/api/order', orderRouter)
+
+// Test route
+app.get('/', (req, res) => {
     res.send("API Working")
 })
 
-app.listen(port, ()=> console.log('Server started on PORT : '+ port));
+app.listen(port, () => {
+    console.log('Server started on PORT : ' + port)
+})

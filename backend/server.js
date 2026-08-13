@@ -15,13 +15,7 @@ connectDB()
 connectCloudinary()
 //middlewares
 app.use(express.json())
-app.use(cors({
-    origin: [
-        "https://full-e-commerce-forever-frontend.vercel.app",
-         "http://localhost:5173"
-    ],
-    credentials: true
-}))
+app.use(cors())
 
 // api endpoints
 app.use('/api/user',userRouter)

@@ -39,8 +39,8 @@ const Cart = () => {
           cartData.map((item, index) => {
           
             const productData = products.find((product) => product._id === item._id);
-                 console.log("CART ITEM:", item);
-console.log("ALL PRODUCTS:", products);
+                console.log("CART ITEM ID:", item._id);
+console.log("PRODUCT IDs:", products.map(product => product._id));
 console.log("PRODUCT DATA:", productData);
             return (
               <div key={index} className='py-4 border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4'>
